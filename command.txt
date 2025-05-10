@@ -1,0 +1,10 @@
+py -m venv venv
+pip install uvicorn
+pip install fastapi
+uvicorn api.main:app --reload
+pip install pytest
+pip install requests
+pip install -r requirements.txt
+
+aws configure
+aws s3 cp  test.txt
