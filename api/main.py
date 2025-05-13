@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from mangum import Mangum
 from fastapi.middleware.cors import CORSMiddleware
-
+from api.auth.router import router as auth_router
 
 app = FastAPI(
     title="bi-mooccubex-backend",
@@ -17,11 +17,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 # Include routers
-# app.include_router(auth_router, prefix="/auth", tags=["auth"])
-# app.include_router(bi_overview, prefix="/overview", tags=["overview"])
-# app.include_router(bi_data_quality, prefix="/quality", tags=["quality"])
-# app.include_router(bi_data_mining, prefix="/mining", tags=["mining"])
-# app.include_router(bi_course, prefix="/course", tags=["course"])
+app.include_router(auth_router, prefix="/auth", tags=["auth"])
+# app.include_router(bi_overview_router, prefix="/overview", tags=["overview"])
+# app.include_router(bi_data_quality_router, prefix="/quality", tags=["quality"])
+# app.include_router(bi_data_mining_router, prefix="/mining", tags=["mining"])
+# app.include_router(bi_course_router, prefix="/course", tags=["course"])
 
 @app.get("/")
 async def root():
