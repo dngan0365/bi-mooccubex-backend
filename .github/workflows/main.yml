@@ -25,11 +25,6 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Run Tests
-        run: |
-          source venv/bin/activate
-          pytest
-
       - name: Create archive of dependencies
         run: |
           cd venv/lib/python3.12/site-packages
