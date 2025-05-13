@@ -70,5 +70,5 @@ jobs:
               --function-name fastapi-auth \
               --s3-bucket fastapi-mooccubex \
               --s3-key api.zip && break || sleep 10 \
-              --environment "Variables={SECRET_KEY=${{ secrets.SECRET_KEY }}}"
+              --environment "Variables={SECRET_KEY=${{ secrets.SECRET_KEY }}, AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}, AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}}"
           done
