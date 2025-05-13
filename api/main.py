@@ -18,10 +18,6 @@ app.add_middleware(
 )
 # Include routers
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
-# app.include_router(bi_overview_router, prefix="/overview", tags=["overview"])
-# app.include_router(bi_data_quality_router, prefix="/quality", tags=["quality"])
-# app.include_router(bi_data_mining_router, prefix="/mining", tags=["mining"])
-# app.include_router(bi_course_router, prefix="/course", tags=["course"])
 
 @app.get("/")
 async def root():
