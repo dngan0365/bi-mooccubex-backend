@@ -23,7 +23,14 @@ async def signup(user: UserCreate):
         # Create JWT token
         access_token = create_access_token(data={"sub": user.email})
         
-        return {"access_token": access_token, "token_type": "bearer"}
+        return {
+            "access_token": access_token,
+            "user": {
+                "id": str(user_in_db.id),  # Convert UUID to string
+                "username": user_in_db.username,
+                "email": user_in_db.email
+            }
+        }
     
     except Exception as e:
         raise HTTPException(status_code=500, detail="Internal Server Error")
@@ -36,7 +43,15 @@ async def signin(user_data: UserLogin):
             raise HTTPException(status_code=401, detail="Invalid email or password")
 
         access_token = create_access_token(data={"sub": user.email})
-        return {"access_token": access_token, "token_type": "bearer"}
+        
+        return {
+            "access_token": access_token,
+            "user": {
+                "id": str(user.id),  # Use 'user', not 'user_in_db'
+                "username": user.username,
+                "email": user.email
+            }
+        }
 
     except Exception as e:
         # Log error to console (will appear in CloudWatch logs)
