@@ -11,7 +11,7 @@ app = FastAPI(
 # Setup CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000", "https://bi-moocubex-frontend.vercel.app/"],  # exact origin
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
