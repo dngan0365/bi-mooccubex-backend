@@ -67,7 +67,7 @@ Backend này chịu trách nhiệm cung cấp dữ liệu, xử lý logic nghi�
     * API: `http://localhost:8000` (hoặc cổng khác nếu Uvicorn được cấu hình khác)
     * Tài liệu API tương tác (Swagger UI): `http://localhost:8000/docs`
     * Tài liệu API thay thế (ReDoc): `http://localhost:8000/redoc`
-```
+
 📜 **API Endpoints Chính (Ví dụ)**
 
 API cung cấp các tài liệu tương tác tự động tại `/docs` (Swagger UI) và `/redoc`. Dưới đây là một số ví dụ về endpoints có thể có:
