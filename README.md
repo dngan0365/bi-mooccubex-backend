@@ -77,10 +77,10 @@ Backend này chịu trách nhiệm cung cấp dữ liệu, xử lý logic nghi�
 ├── db/                     # Quản lý kết nối và thao tác cơ sở dữ liệu
 │   └── dynamodb.py         # Cấu hình và truy vấn DynamoDB
 ├── lambda/                 # Thư mục chứa các hàm Lambda (AWS Lambda functions)
-│   ├── course.py           # Hàm xử lý nghiệp vụ liên quan đến khóa học trên Lambda
-│   └── user.py             # Hàm xử lý nghiệp vụ liên quan đến người dùng trên Lambda
-├── models/                 # Định nghĩa các schema/model dữ liệu (Pydantic models hoặc ORM models)
-│   └── ...                 # Các tệp định nghĩa cấu trúc dữ liệu: Course, User, Enrollment, etc.
+│   ├── course.py           # Hàm xử lý liên quan đến khóa học trên Lambda
+│   └── user.py             # Hàm xử lý liên quan đến người dùng trên Lambda
+├── models/                 # Định nghĩa các schema/model dữ liệu
+│   └── ...                 # Các tệp định nghĩa cấu trúc dữ liệu: User,...
 ├── tests/                  # Bộ test cho hệ thống (unit test, integration test)
 │   ├── __init__.py         # Để Python nhận diện đây là một package
 │   └── test_core.py        # Test logic lõi (ví dụ: test cho hàm, API, services)
