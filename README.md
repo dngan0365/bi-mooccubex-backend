@@ -167,10 +167,6 @@ Backend này chịu trách nhiệm cung cấp dữ liệu, xử lý logic nghi�
 
 Nếu bạn muốn đóng góp cho dự án này, vui lòng [Mô tả quy trình đóng góp của bạn, ví dụ: fork repository, tạo branch mới, submit pull request với mô tả chi tiết].
 
-📄 **Giấy Phép**
-
-Dự án này được cấp phép theo [Tên Giấy Phép, ví dụ: MIT License]. Xem tệp `LICENSE` để biết thêm chi tiết (nếu có).
-
 ---
 
 Hy vọng README này hữu ích cho backend API của bạn! Hãy tùy chỉnh thêm các chi tiết cụ thể của dự án như tên các endpoints, cấu trúc thư mục chính xác, và các công nghệ phụ trợ khác mà bạn sử dụng.
