@@ -1,6 +1,6 @@
 # Backend API cho Dự án BI MOOCCubeX và Dự đoán Kết quả Học tập
 
-Đây là backend API được xây dựng bằng **FastAPI**, một framework Python hiệu suất cao để xây dựng các API web hiện đại, nhanh chóng, dễ học và dựa trên các chuẩn Python type hints. API này phục vụ cho ứng dụng frontend [Tên Frontend Project của bạn, ví dụ: MOOCCubeX Analytics Dashboard] được xây dựng bằng Next.js.
+Đây là backend API được xây dựng bằng **FastAPI**, một framework Python hiệu suất cao để xây dựng các API web hiện đại, nhanh chóng, dễ học và dựa trên các chuẩn Python type hints. API này phục vụ cho ứng dụng frontend [Phân tích dữ liệu và dự đoán kết quả học tập cho bộ dữ liệu MOOCCubeX](https://github.com/dngan0365/bi-moocubex-frontend) được xây dựng bằng Next.js.
 
 🎯 **Mục Đích của Repository**
 
@@ -50,40 +50,109 @@ Backend này chịu trách nhiệm cung cấp dữ liệu, xử lý logic nghi�
     # Thêm các biến khác nếu cần
     ```
 
-5.  **Chạy database migrations (nếu sử dụng Alembic hoặc tương tự):**
-    ```bash
-    # Ví dụ với Alembic
-    alembic upgrade head
-    ```
-
-6.  **Chạy server phát triển FastAPI:**
+5.  **Chạy server phát triển FastAPI:**
     Sử dụng Uvicorn (một ASGI server):
     ```bash
     uvicorn main:app --reload
     ```
     (Giả sử tệp chính của bạn là `main.py` và đối tượng FastAPI instance là `app`)
 
-7.  Mở trình duyệt và truy cập:
+6.  Mở trình duyệt và truy cập:
     * API: `http://localhost:8000` (hoặc cổng khác nếu Uvicorn được cấu hình khác)
     * Tài liệu API tương tác (Swagger UI): `http://localhost:8000/docs`
     * Tài liệu API thay thế (ReDoc): `http://localhost:8000/redoc`
 
+
+
+## 📂 Hướng Dẫn Thư Mục
+```
+.
+├── .github/                # Cấu hình liên quan đến GitHub (ví dụ: CI/CD workflow)
+│   └── ...                 # Có thể chứa các workflow GitHub Actions như test.yml, deploy.yml
+├── api/                    # Định nghĩa các endpoint API (có thể chia theo domain: course, user, auth, v.v.)
+│   ├── auth/               # Các endpoint hoặc logic xác thực người dùng (login, register, v.v.)
+│   ├── course.py           # Logic xử lý các API liên quan đến khóa học
+│   ├── user.py             # Logic xử lý các API liên quan đến người dùng
+│   └── router.py           # Cấu hình định tuyến chính, nơi include tất cả các router
+├── db/                     # Quản lý kết nối và thao tác cơ sở dữ liệu
+│   └── dynamodb.py         # Cấu hình và truy vấn DynamoDB
+├── lambda/                 # Thư mục chứa các hàm Lambda (AWS Lambda functions)
+│   ├── course.py           # Hàm xử lý nghiệp vụ liên quan đến khóa học trên Lambda
+│   └── user.py             # Hàm xử lý nghiệp vụ liên quan đến người dùng trên Lambda
+├── models/                 # Định nghĩa các schema/model dữ liệu (Pydantic models hoặc ORM models)
+│   └── ...                 # Các tệp định nghĩa cấu trúc dữ liệu: Course, User, Enrollment, etc.
+├── tests/                  # Bộ test cho hệ thống (unit test, integration test)
+│   ├── __init__.py         # Để Python nhận diện đây là một package
+│   └── test_core.py        # Test logic lõi (ví dụ: test cho hàm, API, services)
+├── utils.py                # Tiện ích, hàm dùng chung giữa nhiều phần (helpers)
+├── create.py               # Tập lệnh tạo dữ liệu, migration, schema khởi tạo, etc.
+├── main.py                 # Điểm bắt đầu chạy ứng dụng (FastAPI app hoặc Lambda handler chính)
+├── requirements.txt        # Danh sách các thư viện Python cần thiết để chạy project
+├── dev-requirements.txt    # Thư viện bổ sung khi phát triển (test, lint, debug)
+├── command.txt             # Các lệnh CLI dùng trong quá trình phát triển hoặc hướng dẫn
+├── README.md               # Tài liệu giới thiệu và hướng dẫn sử dụng dự án
+├── .gitignore              # Tệp cấu hình để loại trừ file/folder không cần push lên Git
+
+
+```
 📜 **API Endpoints Chính (Ví dụ)**
-
-API cung cấp các tài liệu tương tác tự động tại `/docs` (Swagger UI) và `/redoc`. Dưới đây là một số ví dụ về endpoints có thể có:
-
-* **Authentication:**
-    * `POST /api/v1/auth/token`: Đăng nhập, trả về access token.
-    * `GET /api/v1/users/me`: Lấy thông tin người dùng hiện tại (yêu cầu token).
+* **Authentication:** 
+    * `POST /api/auth/token`: Đăng nhập, trả về access token.
+    * `GET /api/users/me`: Lấy thông tin người dùng hiện tại (yêu cầu token).
+* **Những hàm trong các folder sau được tích hợp vào lambda nên không có router, chỉ show để tham khảo**
 * **Courses:**
-    * `GET /api/v1/courses/`: Lấy danh sách tất cả khóa học.
-    * `GET /api/v1/courses/{course_id}`: Lấy thông tin chi tiết một khóa học.
-* **Predictions:**
-    * `POST /api/v1/predictions/student-outcome`: Gửi dữ liệu học viên và nhận kết quả dự đoán.
-    * Body request có thể bao gồm các features cần thiết cho mô hình.
-* **Data Mining / Data Quality Specific Endpoints:**
-    * `GET /api/v1/data-mining/summary`: Lấy thông tin tổng quan về khai phá dữ liệu.
-    * `GET /api/v1/data-quality/report/{dataset_id}`: Lấy báo cáo chất lượng dữ liệu cho một tập dữ liệu cụ thể.
+    * `GET /api/top-courses/`: 
+        - Mô tả: Truy vấn 5 khóa học có số lượng người dùng tham gia nhiều nhất.
+        - Trường dữ liệu trả về: course_id, name, user_count.
+    * `GET /api/monthly-users/`:
+        - Mô tả: Lấy số lượng người dùng duy nhất theo từng tháng kể từ năm 2019.
+        - Trường dữ liệu trả về: year, month, num_users.
+    * `GET /api/yearly-users`:
+      - Mô tả: Lấy số lượng người dùng duy nhất theo từng năm kể từ 2019
+      - Trường dữ liệu trả về: year, num_users.
+    * `GET /api/summary-stats`: 
+      - Mô tả: Trả về thống kê tổng quan: Tổng số người dùng, Số khóa học kể từ tháng 7/2020, Số người dùng trong năm 2020
+      - Trường dữ liệu trả về: total_users, total_courses, courses_since_july_2020, users_in_2020.
+    * `GET /api/label-distribution`:
+        - Mô tả: Thống kê phân phối nhãn (label) của người dùng với điều kiện cụ thể về thời gian (end_year, end_month).
+        - Trường dữ liệu trả về: label, num_users.
+    * `GET /api/course-enrollments`:
+        - Mô tả: Truy vấn 100 khóa học có nhiều người tham gia nhất, kèm thông tin chi tiết.
+        - Trường dữ liệu trả về: course_id, name, school, start_date, end_date, user_count.
+    * `GET /api/course/{course_id}`:
+        - Mô tả: Lấy thông tin chi tiết của một khóa học dựa theo course_id.
+        - Trường dữ liệu trả về: course_id, name, start_date, end_date, duration_days, certificate, assignment, exam, video, video_count, exercise_count, chapter_count.
+    * `GET /api/search-labels?course_id={id}`:
+        - Mô tả: Đếm số người dùng theo label của một khóa học cụ thể. 
+        - Tham số bắt buộc: course_id. Trường dữ liệu trả về: label, count.
+    * `GET /api/course-video-count?course_id={id}`:
+        - Mô tả: Thống kê số lượng video theo tháng và năm cho một khóa học cụ thể.
+        - Trường dữ liệu trả về: year, month, video_count.
+    * `GET /api/course-exercise-count?course_id={id}`:
+        - Mô tả: Thống kê số lượng bài tập được nộp theo tháng và năm cho một khóa học.
+        - Trường dữ liệu trả về: year, month, exercise_count.
+    * `GET /api/course-comment-reply-sentiment?course_id={id}`:
+        - Mô tả: Phân tích cảm xúc (sentiment) của bình luận và phản hồi trong một khóa học.
+        - Trường dữ liệu trả về: comments: danh sách theo sentiment_label, year, month, comment_count
+        - replies: tương tự nhưng là reply_count.
+    * `GET /api/course-users?course_id={id}`:
+        - Mô tả: Trả về danh sách tối đa 100 người dùng đã tham gia khóa học.
+        - Trường dữ liệu trả về: user_id, school, user_month, user_year.
+
+* **Users:**
+    * `GET /api/user-course-info`:
+      - Mô tả: Lấy thông tin tổng hợp của người dùng trong khóa học (profile, bài tập, video, điểm)
+      - Tham số: course_id, user_id. Trả về: user_info, user_exercises, user_video, user_comments
+    * `GET /api/user-course-score-proportion`:
+      - Mô tả: Lấy thông tin điểm số từng phần của người dùng trong khóa học
+      - Tham số: course_id, user_id. Trả về: assignment_score, final_exam_score, video_score, total_score
+    * `GET /api/user-course-behaviour`:
+      - Mô tả: Truy vết hành vi học tập theo tháng (xem video, nộp bài)
+      - Tham số: course_id, user_id. Trả về: user_video, user_exercises
+    * `GET /api/user-course-predict`:
+      - Mô tả: Dự đoán khả năng hoàn thành khóa học bằng mô hình ML
+      - Tham số: course_id, user_id. Trả về: Danh sách theo từng phase gồm predicted_label
+
 
 🛠️ **Công Nghệ Sử Dụng**
 
